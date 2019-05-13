@@ -16,6 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from twango.authentication.urls import urlpatterns as authentication_urls
+# from twango.notification.urls import urlpatterns as notification_urls
+# from twango.tweet.urls import urlpatterns as tweet_urls
+from twango.twitteruser.urls import urlpatterns as twitteruser_urls
+
+# from twango.twitteruser.models import TwitterUser
+# can make admibn file
+# admin.site.register(TwitterUser)
+
+
+# from backend_django_recipes.views import home
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path("/", home, name="home")
 ]
+
+urlpatterns += authentication_urls
+# urlpatterns += notification_urls
+# urlpatterns += tweet_urls
+urlpatterns += twitteruser_urls
