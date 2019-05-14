@@ -1,14 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+from twango.twitteruser.models import TwitterUser
+from twango.tweet.models import Tweet
 
 
 class Notification(models.Model):
-    pass
-    # username = models.CharField(max_length=50)
-    # display_name = models.CharField(max_length=50)
-    # following = models.ManyToManyField("self", symmetrical=False, blank=True)
-    # user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    # def __str__(self):
-    #     return self.username
-    #     # return self.user.username
+    # wassign to someone; post message with your username (tweet about them)
+    # and get info from that; how to see that the not was seen
+    username = models.ForeignKey(
+        TwitterUser, on_delete=models.CASCADE)
+    twang = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+    was_viewed = models.BooleanField(default=False)
