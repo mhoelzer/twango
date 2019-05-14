@@ -8,10 +8,8 @@ from django.contrib.auth.decorators import login_required
 # maybe in twitteruser, add editable=True in the model
 @login_required()
 def notification_view(request):
-    pass
-    # html = "../templates/generic.html"
-    # header = "Signup"
-    # form = None
+    html = "../templates/notifications.html"
+    form = None
     # button_value = "Signup for your new account, buddy!"
     # if request.method == "POST":
     #     form = SignupForm(request.POST)
@@ -29,5 +27,6 @@ def notification_view(request):
     #         return HttpResponseRedirect(reverse("home"))
     # else:
     #     form = SignupForm()
-    # return render(request, html, {"header": header, "form": form,
-    #                               "button_value": button_value})
+    # return render(request, html, {"form": form})
+    notification = Notification.objects.all()
+    return render(request, html, {"form": notification})
