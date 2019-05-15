@@ -34,24 +34,24 @@ def signup_view(request):
 
 @login_required()
 def profile_view(request):
-    pass
-#     html = "../templates/twitteruser.html"
-#     header = "Profile of: "
-#     form = None
-#     if request.method == "POST":
-#         form = SignupForm(request.POST)
-#         if form.is_valid():
-#             data = form.cleaned_data
-#             user = User.objects.get(display_name=data["display_name"])
-#             # # data["username"],data["password"])
-#             # data["username"], data["email"], data["password"])
-#             login(request, user)
-#             TwitterUser.objects.create(
-#                 display_name=data["display_name"],
-#                 # bio=data["bio"],
-#                 user=user
-#             )
-#             return User.objects
-#     else:
-#         form = SignupForm()
-#     return render(request, html, {"header": header, "form": form})
+    html = "../templates/twitteruser.html"
+    # form = None
+    # currentuser = TwitterUser.objects.filter(display_name=request.user.display_name).first()
+    # ^^^ this can be helpful when trying to find someone who isnt the loggedin person
+    currentuser = request.user.twitteruser
+    return render(request, html, {"currentuser": currentuser})
+    # if request.method == "POST":
+    #     form = SignupForm(request.POST)
+    #     if form.is_valid():
+    #         data = form.cleaned_data
+    #         user = User.objects.get(display_name=data["display_name"])
+    #         # # data["username"],data["password"])
+    #         login(request, user)
+    #         TwitterUser.objects.create(
+    #             display_name=data["display_name"],
+    #             user=user
+    #         )
+    #         return User.objects
+    # else:
+    #     form = SignupForm()
+    # return render(request, html, {"header": header, "form": form})
