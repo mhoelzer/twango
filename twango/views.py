@@ -6,6 +6,7 @@ from django.shortcuts import render, reverse, HttpResponseRedirect
 # from django.contrib.auth.models import User
 # from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from twango.tweet.models import Tweet
 
 
 @login_required()
@@ -13,4 +14,5 @@ def home_view(request):
     html = "home.html"
     # items = Recipes.objects.all().order_by("title")
     # return render(request, html, {"list": items})
-    return render(request, html)
+    twangs = Tweet.objects.all()
+    return render(request, html, {"twangs": twangs})
