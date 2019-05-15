@@ -30,3 +30,5 @@ def notification_view(request):
     # return render(request, html, {"form": form})
     notification = Notification.objects.all()
     return render(request, html, {"form": notification})
+
+    # maybe make it so it deletes once you check and go to this form? no boolean?
