@@ -5,10 +5,11 @@ from django.utils import timezone
 
 
 class Tweet(models.Model):
-    username = models.ForeignKey(
+    user = models.ForeignKey(
         TwitterUser, on_delete=models.CASCADE)
     # username = models.ForeignKey(
     #     User, on_delete=models.CASCADE)
+    # display_name = models.ForeignKey(TwitterUser, on_delete=models.CASCADE)
     twang = models.CharField(max_length=140)
     date = models.DateTimeField(default=timezone.now)
 
