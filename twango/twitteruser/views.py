@@ -3,6 +3,7 @@ from twango.twitteruser.forms import SignupForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from twango.twitteruser.models import TwitterUser
+from twango.tweet.models import Tweet
 from django.contrib.auth.decorators import login_required
 
 
@@ -21,6 +22,7 @@ def signup_view(request):
             # data["username"], data["email"], data["password"])
             login(request, user)
             TwitterUser.objects.create(
+                username=data["username"], 
                 display_name=data["display_name"],
                 # bio=data["bio"],
                 user=user
@@ -33,13 +35,23 @@ def signup_view(request):
 
 
 @login_required()
-def profile_view(request):
+def profile_view(request, username):
     html = "../templates/twitteruser.html"
     # form = None
+    # twitteruser = TwitterUser.objects.filter(username=request.user.username).first()
+    # return render(request, html, {"currentuser": twitteruser})
+    # twitteruser = TwitterUser.objects.filter(user__username=request.user.username).first()
+    # return render(request, html, {"currentuser": twitteruser})
     # currentuser = TwitterUser.objects.filter(display_name=request.user.display_name).first()
     # ^^^ this can be helpful when trying to find someone who isnt the loggedin person
-    currentuser = request.user.twitteruser
-    return render(request, html, {"currentuser": currentuser})
+    targeteduser = TwitterUser.objects.filter(username=username).first()
+    print(targeteduser)
+    targeteduser_twangs = Tweet.objects.filter(user=targeteduser)
+    currentuser = TwitterUser.objects.filter(username=request.user.twitteruser).first()
+    # twangs = TwitterUser.objects.all().filter(twitteruser_id=id)
+    twangs = Tweet.objects.filter(user=request.user.twitteruser)
+    return render(request, html, {"targeteduser": targeteduser, "twangs": targeteduser_twangs})
+
     # if request.method == "POST":
     #     form = SignupForm(request.POST)
     #     if form.is_valid():
