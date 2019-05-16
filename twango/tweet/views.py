@@ -18,6 +18,7 @@ def twang_creation_view(request):
             Tweet.objects.create(
                 # figureout username
                 username=request.user.twitteruser,
+                # display_name=request.user.twitteruser,
                 twang=data["twang"],
                 # date=data["date"]
             )
@@ -32,7 +33,8 @@ def twang_creation_view(request):
 def twang_view(request):
     # get all twangs and render to page
     html = "twangs.html"
-    twangs = Tweet.objects.all()
+    # twangs = Tweet.objects.all()
+    twangs = Tweet.objects.filter()
     return render(request, html, {"twangs": twangs})
 
 
@@ -43,6 +45,7 @@ def twang_view(request):
 #     authors = Author.objects.all().filter(id=id)
 #     items = Recipes.objects.all()(author_id=id)
 #     return render(request, html, {"authors": authors, "recipes": items})
+
     # html = "list_view.html"
     # items = Recipes.objects.all().order_by("title")
     # return render(request, html, {"list": items})
