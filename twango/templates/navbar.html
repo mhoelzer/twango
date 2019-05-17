@@ -4,15 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Document</title>
+        <title>Navbar</title>
     </head>
     <body>
         <div>
             <a href="/"><button>Home</button></a>
             <a href="/twang/"><button>Twang</button></a>
             <a href="/notifications/"><button>Notifications</button></a>
-            <!-- <a ><button>My Profile</button></a> -->
-            <!-- ^^^ FIX LINK; make it for your username url -->
+            <a href="/{{ request.user.username }}/"><button>My Profile</button></a>
             <a href="/logout/"><button>Logout</button></a>
         </div>
     </body>
