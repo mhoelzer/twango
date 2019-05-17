@@ -5,7 +5,8 @@
 
 <h2>twangs</h2>
 {% for t in twangs %}
-<p><a href="/{{ t.user }}/">@{{ t.user }}</a> on <a href="/{{ t.id }}/">{{ t.date }}</a></p>
+<p><a href="/{{ t.user }}/">@{{ t.user }}</a> on <a href="/twang/{{ t.id }}/">{{ t.date }}</a></p>
+<!-- keep the /twang/? -->
 <!-- <p>@{{ t.username }} -- {{ t.display_name }} on {{ t.date }}</p> -->
 <p>{{ t.twang }}</p>
 <p>twang id {{ t.id }}</p>
