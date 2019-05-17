@@ -17,7 +17,7 @@ def twang_creation_view(request):
             data = form.cleaned_data
             Tweet.objects.create(
                 # figureout username
-                username=request.user.twitteruser,
+                user=request.user.twitteruser,
                 # display_name=request.user.twitteruser,
                 twang=data["twang"],
                 # date=data["date"]
@@ -30,11 +30,11 @@ def twang_creation_view(request):
 
 
 # own twangs
-def twang_view(request):
+def twang_view(request, id):
     # get all twangs and render to page
     html = "twangs.html"
     # twangs = Tweet.objects.all()
-    twangs = Tweet.objects.filter()
+    twangs = Tweet.objects.filter(id=id)
     return render(request, html, {"twangs": twangs})
 
 

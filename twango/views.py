@@ -14,5 +14,5 @@ def home_view(request):
     html = "home.html"
     # items = Recipes.objects.all().order_by("title")
     # return render(request, html, {"list": items})
-    twangs = Tweet.objects.all()
+    twangs = Tweet.objects.all().order_by("-date")
     return render(request, html, {"twangs": twangs})

@@ -38,7 +38,7 @@ def signup_view(request):
 def profile_view(request, username):
     html = "../templates/twitteruser.html"
     targeteduser = TwitterUser.objects.filter(username=username).first()
-    targeteduser_twangs = Tweet.objects.filter(user=targeteduser)
+    targeteduser_twangs = Tweet.objects.filter(user=targeteduser).order_by("-date")
     # currentuser = TwitterUser.objects.filter(username=request.user.twitteruser).first()
     # twangs = TwitterUser.objects.all().filter(twitteruser_id=id)
     twangs = Tweet.objects.filter(user=request.user.twitteruser)
