@@ -7,6 +7,7 @@ from django.shortcuts import render, reverse, HttpResponseRedirect
 # from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from twango.tweet.models import Tweet
+# from twango.twitteruser.models import TwitterUser
 
 
 @login_required()
@@ -14,5 +15,8 @@ def home_view(request):
     html = "home.html"
     # items = Recipes.objects.all().order_by("title")
     # return render(request, html, {"list": items})
-    twangs = Tweet.objects.all().order_by("-date")
+    # make it filter based on following; will have to import w/e
+    # targeteduser = TwitterUser.objects.filter(username=username).first()
+    # twangs = Tweet.objects.filter(user=targeteduser).order_by("-date")
+    twangs = Tweet.objects.filter().order_by("-date")
     return render(request, html, {"twangs": twangs})
