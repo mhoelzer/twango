@@ -4,7 +4,6 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from twango.twitteruser.models import TwitterUser
 from twango.tweet.models import Tweet
-from django.contrib.auth.decorators import login_required
 
 
 # maybe in twitteruser, add editable=True in the model
@@ -33,7 +32,6 @@ def signup_view(request):
                                   "button_value": button_value})
 
 
-@login_required()
 def profile_view(request, username):
     html = "../templates/twitteruser.html"
     targeteduser = TwitterUser.objects.filter(username=username).first()
