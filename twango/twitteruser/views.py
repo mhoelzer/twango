@@ -19,10 +19,9 @@ def signup_view(request):
             data = form.cleaned_data
             user = User.objects.create_user(
                 username=data["username"], password=data["password"])
-            # data["username"], data["email"], data["password"])
             login(request, user)
             TwitterUser.objects.create(
-                username=data["username"], 
+                username=data["username"],
                 display_name=data["display_name"],
                 # bio=data["bio"],
                 user=user
@@ -38,8 +37,13 @@ def signup_view(request):
 def profile_view(request, username):
     html = "../templates/twitteruser.html"
     targeteduser = TwitterUser.objects.filter(username=username).first()
-    targeteduser_twangs = Tweet.objects.filter(user=targeteduser).order_by("-date")
+    targeteduser_twangs = Tweet.objects.filter(
+        user=targeteduser).order_by("-date")
+    num_twangs = len(targeteduser_twangs)
+    # num_followers = len()
     # currentuser = TwitterUser.objects.filter(username=request.user.twitteruser).first()
     # twangs = TwitterUser.objects.all().filter(twitteruser_id=id)
-    twangs = Tweet.objects.filter(user=request.user.twitteruser)
-    return render(request, html, {"targeteduser": targeteduser, "twangs": targeteduser_twangs})
+    # twangs = Tweet.objects.filter(user=request.user.twitteruser)
+    return render(request, html, {"targeteduser": targeteduser,
+                                  "twangs": targeteduser_twangs,
+                                  "num_twangs": num_twangs})

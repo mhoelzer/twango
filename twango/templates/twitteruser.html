@@ -10,7 +10,9 @@
         {% include "navbar.html" %}
         <h1>Profile of: {{ targeteduser.username }}</h1>
         <p>@{{ targeteduser }}</p>
-        <p>Display name: {{ targeteduser.display_name }}</p>
+        <p>Display Name: {{ targeteduser.display_name }}</p>
+        <p>Number of Twangs: {{ num_twangs }}</p>
+        <p>Number of Followers: </p>
         {% include "twangs.html" %}
         <!-- <h1>{{ header }} {{ user }}</h1> -->
         <!-- <form action="" method="post">
