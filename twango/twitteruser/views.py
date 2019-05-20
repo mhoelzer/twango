@@ -35,13 +35,53 @@ def signup_view(request):
 def profile_view(request, username):
     html = "../templates/twitteruser.html"
     targeteduser = TwitterUser.objects.filter(username=username).first()
+
     targeteduser_twangs = Tweet.objects.filter(
         user=targeteduser).order_by("-date")
     num_twangs = len(targeteduser_twangs)
-    # num_followers = len()
+
+    follow_status_button = None
+    num_followers = targeteduser.following.count()
+    # figoure out taruser and following field; don't need length; .count
     # currentuser = TwitterUser.objects.filter(username=request.user.twitteruser).first()
     # twangs = TwitterUser.objects.all().filter(twitteruser_id=id)
     # twangs = Tweet.objects.filter(user=request.user.twitteruser)
-    return render(request, html, {"targeteduser": targeteduser,
-                                  "twangs": targeteduser_twangs,
-                                  "num_twangs": num_twangs})
+
+    data = {}
+    if request.user.is_authenticated:
+        data = {"targeteduser": targeteduser, "twangs": targeteduser_twangs,
+                "num_twangs": num_twangs,
+                "follow_status_button": follow_status_button,
+                "num_followers": num_followers}
+        currentuser = TwitterUser.objects.filter(
+            username=request.user.twitteruser).first()
+        if targeteduser not in currentuser.following.get_queryset():
+            follow_status_button = "Follow"
+        else:
+            follow_status_button = "Unfollow"
+    else:
+        data = {"targeteduser": targeteduser, "twangs": targeteduser_twangs,
+                "num_twangs": num_twangs, "num_followers": num_followers}
+    return render(request, html, data)
+
+
+# try to see ifauthenticated to check for following stuff; for not loggedin
+def following_or_not_view(request, username):
+    html = "../templates/followstatus.html"
+    header = "Following Status"
+    # follow_status_button = None
+    is_following = False
+    targeteduser = TwitterUser.objects.filter(username=username).first()
+    currentuser = TwitterUser.objects.filter(
+        username=request.user.twitteruser).first()
+    if targeteduser not in currentuser.following.get_queryset():
+        # follow_status_button = "Unfollow"
+        currentuser.following.add(targeteduser)
+        is_following = True
+    else:
+        # follow_status_button = "Follow"
+        currentuser.following.remove(targeteduser)
+        is_following = False
+    currentuser.save()
+    return render(request, html, {"header": header,
+                                  "is_following": is_following})
