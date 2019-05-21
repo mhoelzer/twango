@@ -10,3 +10,6 @@ class Notification(models.Model):
         TwitterUser, on_delete=models.CASCADE)
     twang = models.ForeignKey(Tweet, on_delete=models.CASCADE)
     was_viewed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.twang.twang

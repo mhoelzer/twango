@@ -1,8 +1,11 @@
+import re
 from django.shortcuts import render, reverse, HttpResponseRedirect
 # from twango.twitteruser.models import TwitterUser
 from twango.tweet.models import Tweet
 from twango.tweet.forms import TwangForm
 from django.contrib.auth.decorators import login_required
+from twango.notification.models import Notification
+from twango.twitteruser.models import TwitterUser
 
 
 @login_required()
@@ -15,13 +18,21 @@ def twang_creation_view(request):
         form = TwangForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            Tweet.objects.create(
+            twang = Tweet.objects.create(
                 # figureout username
                 user=request.user.twitteruser,
                 # display_name=request.user.twitteruser,
                 twang=data["twang"],
                 # date=data["date"]
             )
+            user_matches = re.findall(r"@(\w+)", data["twang"])
+            # print(user_matches)
+            # make notif for all users; iter through
+            for match in user_matches:
+                Notification.objects.create(
+                    username=TwitterUser.objects.filter(username=match).first(),
+                    twang=twang
+                )
         return HttpResponseRedirect(reverse("home"))
     else:
         form = TwangForm()
