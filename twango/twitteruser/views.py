@@ -40,25 +40,25 @@ def profile_view(request, username):
         user=targeteduser).order_by("-date")
     num_twangs = len(targeteduser_twangs)
 
-    follow_status_button = None
     num_followers = targeteduser.following.count()
     # figoure out taruser and following field; don't need length; .count
     # currentuser = TwitterUser.objects.filter(username=request.user.twitteruser).first()
     # twangs = TwitterUser.objects.all().filter(twitteruser_id=id)
     # twangs = Tweet.objects.filter(user=request.user.twitteruser)
+    follow_status_button = None
 
     data = {}
     if request.user.is_authenticated:
-        data = {"targeteduser": targeteduser, "twangs": targeteduser_twangs,
-                "num_twangs": num_twangs,
-                "follow_status_button": follow_status_button,
-                "num_followers": num_followers}
         currentuser = TwitterUser.objects.filter(
             username=request.user.twitteruser).first()
         if targeteduser not in currentuser.following.get_queryset():
             follow_status_button = "Follow"
         else:
             follow_status_button = "Unfollow"
+        data = {"targeteduser": targeteduser, "twangs": targeteduser_twangs,
+                "num_twangs": num_twangs,
+                "follow_status_button": follow_status_button,
+                "num_followers": num_followers}
     else:
         data = {"targeteduser": targeteduser, "twangs": targeteduser_twangs,
                 "num_twangs": num_twangs, "num_followers": num_followers}
