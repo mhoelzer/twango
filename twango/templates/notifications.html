@@ -6,7 +6,9 @@
 <p>no new notifications</p>
 {% else %}
 {% for n in notifications %}
-{{ n }}
+<ol>
+    <li>{{ n }}</li>
+</ol>
 {% endfor %}
 {% endif %} 
 {% endblock %}
